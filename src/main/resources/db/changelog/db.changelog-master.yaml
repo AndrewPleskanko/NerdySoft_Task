@@ -1,0 +1,25 @@
+databaseChangeLog:
+  - include:
+      file: classpath:/db/changelog/changes/001-create-member-table.sql
+      author: Andriy Pleskanko
+      comment: Create member table
+  - include:
+      file: classpath:/db/changelog/changes/002-create-book-table.sql
+      author: Andriy Pleskanko
+      comment: Create book table
+  - include:
+      file: classpath:/db/changelog/changes/003-create-member_books-table.sql
+      author: Andriy Pleskanko
+      comment: Create member_books table
+  - include:
+      file: classpath:/db/changelog/changes/004-insert-members.sql
+      author: Andriy Pleskanko
+      comment: Insert members
+  - include:
+      file: classpath:/db/changelog/changes/005-insert-books.sql
+      author: Andriy Pleskanko
+      comment: Insert book
+  - include:
+      file: classpath:/db/changelog/changes/006-insert-member_books.sql
+      author: Andriy Pleskanko
+      comment: Insert member_books
