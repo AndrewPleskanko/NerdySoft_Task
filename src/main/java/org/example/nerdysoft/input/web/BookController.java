@@ -4,7 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.example.nerdysoft.model.dto.BookDto;
+import org.example.nerdysoft.model.dto.BookDetailedDto;
+import org.example.nerdysoft.model.dto.BorrowRequestDto;
 import org.example.nerdysoft.service.BookService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,40 +31,27 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping
-    public List<BookDto> getAllBooks() {
+    public List<BookDetailedDto> getAllBooks() {
         log.info("Fetching all books");
         return bookService.getAllBooks();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BookDto> getBookById(@PathVariable Long id) {
+    public ResponseEntity<BookDetailedDto> getBookById(@PathVariable Long id) {
         log.info("Fetching book by id: {}", id);
-        BookDto book = bookService.getBookById(id);
-        if (book == null) {
-            log.error("Book not found with id: {}", id);
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(book);
+        return ResponseEntity.ok(bookService.getBookById(id));
     }
 
     @PostMapping
-    public BookDto createBook(@RequestBody BookDto book) {
+    public ResponseEntity<BookDetailedDto> createBook(@Valid @RequestBody BookDetailedDto book) {
         log.info("Creating book: {}", book);
-        return bookService.saveBook(book);
+        return ResponseEntity.ok(bookService.saveBook(book));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BookDto> updateBook(@PathVariable Long id, @Valid @RequestBody BookDto bookDetails) {
+    public ResponseEntity<BookDetailedDto> updateBook(@PathVariable Long id, @Valid @RequestBody BookDetailedDto bookDetails) {
         log.info("Updating book with id: {}", id);
-        BookDto book = bookService.getBookById(id);
-        if (book == null) {
-            log.error("Book not found with id: {}", id);
-            return ResponseEntity.notFound().build();
-        }
-        book.setTitle(bookDetails.getTitle());
-        book.setAuthor(bookDetails.getAuthor());
-        book.setAmount(bookDetails.getAmount());
-        return ResponseEntity.ok(bookService.saveBook(book));
+        return ResponseEntity.ok(bookService.updateBook(id, bookDetails));
     }
 
     @DeleteMapping("/{id}")
@@ -74,11 +62,14 @@ public class BookController {
     }
 
     @PostMapping("/borrow")
-    public ResponseEntity<Void> borrowBook(@RequestParam Long memberId, @RequestParam Long bookId) {
+    public ResponseEntity<Void> borrowBook(@RequestBody BorrowRequestDto borrowRequest) {
+        Long memberId = borrowRequest.getMemberId();
+        Long bookId = borrowRequest.getBookId();
         log.info("Member with id: {} borrowing book with id: {}", memberId, bookId);
         bookService.borrowBook(memberId, bookId);
         return ResponseEntity.ok().build();
     }
+
 
     @PostMapping("/return")
     public ResponseEntity<Void> returnBook(@RequestParam Long memberId, @RequestParam Long bookId) {
@@ -88,20 +79,20 @@ public class BookController {
     }
 
     @GetMapping("/borrowed/{memberName}")
-    public Set<BookDto> getBooksBorrowedByMember(@PathVariable String memberName) {
+    public ResponseEntity<Set<BookDetailedDto>> getBooksBorrowedByMember(@PathVariable String memberName) {
         log.info("Fetching books borrowed by member: {}", memberName);
-        return bookService.getBooksBorrowedByMember(memberName);
+        return ResponseEntity.ok(bookService.getBooksBorrowedByMember(memberName));
     }
 
     @GetMapping("/borrowed/distinct")
-    public Set<String> getDistinctBorrowedBookNames() {
+    public ResponseEntity<Set<String>> getDistinctBorrowedBookNames() {
         log.info("Fetching distinct borrowed book names");
-        return bookService.getDistinctBorrowedBookNames();
+        return ResponseEntity.ok(bookService.getDistinctBorrowedBookNames());
     }
 
     @GetMapping("/borrowed/distinct/amount")
-    public Map<String, Long> getDistinctBorrowedBookNamesWithAmount() {
+    public ResponseEntity<Map<String, Long>> getDistinctBorrowedBookNamesWithAmount() {
         log.info("Fetching distinct borrowed book names with amount");
-        return bookService.getDistinctBorrowedBookNamesWithAmount();
+        return ResponseEntity.ok(bookService.getDistinctBorrowedBookNamesWithAmount());
     }
 }

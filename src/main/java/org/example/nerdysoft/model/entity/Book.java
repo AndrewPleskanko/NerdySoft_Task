@@ -1,6 +1,8 @@
 package org.example.nerdysoft.model.entity;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -15,14 +17,13 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
 @Entity
 @Table(name = "books")
-public class Book {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Book extends AbstractEntity {
 
     @NotBlank(message = "Title is required")
     @Pattern(regexp = "^[A-Z][a-zA-Z]{2,}$", message = "Title should start with a capital letter "
@@ -38,6 +39,28 @@ public class Book {
     private int amount;
 
     @JsonManagedReference
-    @ManyToMany(mappedBy = "borrowedBooks", cascade = CascadeType.ALL)
-    private Set<Member> borrowers = new HashSet<>();
+    @ManyToMany(mappedBy = "borrowedBooks")
+    private Set<Member> borrowers;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Book book)) return false;
+        if (!super.equals(o)) return false;
+        return getAmount() == book.getAmount() && Objects.equals(getTitle(), book.getTitle()) && Objects.equals(getAuthor(), book.getAuthor()) && Objects.equals(getBorrowers(), book.getBorrowers());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getTitle(), getAuthor(), getAmount(), getBorrowers());
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", amount=" + amount +
+                '}';
+    }
 }

@@ -4,14 +4,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.example.nerdysoft.model.dto.BookDto;
+import org.example.nerdysoft.model.dto.BookDetailedDto;
 
 public interface BookService {
-    List<BookDto> getAllBooks();
+    List<BookDetailedDto> getAllBooks();
 
-    BookDto getBookById(Long id);
+    BookDetailedDto updateBook(Long id, BookDetailedDto bookDetails);
 
-    BookDto saveBook(BookDto bookDto);
+    BookDetailedDto getBookById(Long id);
+
+    BookDetailedDto saveBook(BookDetailedDto bookDetailedDto);
 
     void deleteBook(Long id);
 
@@ -19,7 +21,7 @@ public interface BookService {
 
     void returnBook(Long memberId, Long bookId);
 
-    Set<BookDto> getBooksBorrowedByMember(String memberName);
+    Set<BookDetailedDto> getBooksBorrowedByMember(String memberName);
 
     Set<String> getDistinctBorrowedBookNames();
 

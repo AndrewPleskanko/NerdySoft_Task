@@ -2,14 +2,14 @@ package org.example.nerdysoft.service;
 
 import java.util.List;
 
-import org.example.nerdysoft.model.dto.MemberDto;
+import org.example.nerdysoft.model.dto.MemberDetailedDto;
 
 public interface MemberService {
-    List<MemberDto> getAllMembers();
+    List<MemberDetailedDto> getAllMembers();
 
-    MemberDto getMemberById(Long id);
+    MemberDetailedDto getMemberById(Long id);
 
-    MemberDto saveMember(MemberDto memberDto);
+    MemberDetailedDto saveMember(MemberDetailedDto memberDetailedDto);
 
     void deleteMember(Long id);
 }

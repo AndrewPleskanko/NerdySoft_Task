@@ -2,7 +2,7 @@ package org.example.nerdysoft.input.web;
 
 import java.util.List;
 
-import org.example.nerdysoft.model.dto.MemberDto;
+import org.example.nerdysoft.model.dto.MemberDetailedDto;
 import org.example.nerdysoft.service.MemberService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,15 +27,15 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping
-    public List<MemberDto> getAllMembers() {
+    public List<MemberDetailedDto> getAllMembers() {
         log.info("GET /api/members - Fetching all members");
         return memberService.getAllMembers();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MemberDto> getMemberById(@PathVariable Long id) {
+    public ResponseEntity<MemberDetailedDto> getMemberById(@PathVariable Long id) {
         log.info("GET /api/members/{} - Fetching member by id", id);
-        MemberDto member = memberService.getMemberById(id);
+        MemberDetailedDto member = memberService.getMemberById(id);
         if (member == null) {
             log.error("Member not found with id: {}", id);
             return ResponseEntity.notFound().build();
@@ -44,15 +44,15 @@ public class MemberController {
     }
 
     @PostMapping
-    public MemberDto createMember(@Valid @RequestBody MemberDto member) {
+    public MemberDetailedDto createMember(@Valid @RequestBody MemberDetailedDto member) {
         log.info("POST /api/members - Creating member: {}", member);
         return memberService.saveMember(member);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MemberDto> updateMember(@PathVariable Long id, @Valid @RequestBody MemberDto memberDetails) {
+    public ResponseEntity<MemberDetailedDto> updateMember(@PathVariable Long id, @Valid @RequestBody MemberDetailedDto memberDetails) {
         log.info("PUT /api/members/{} - Updating member: {}", id, memberDetails);
-        MemberDto member = memberService.getMemberById(id);
+        MemberDetailedDto member = memberService.getMemberById(id);
         if (member == null) {
             log.error("Member not found with id: {}", id);
             return ResponseEntity.notFound().build();

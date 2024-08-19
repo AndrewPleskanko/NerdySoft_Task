@@ -1,15 +1,14 @@
 package org.example.nerdysoft.service.mapper;
 
-import org.example.nerdysoft.model.dto.BookDto;
+import org.example.nerdysoft.model.dto.BookDetailedDto;
+import org.example.nerdysoft.model.dto.BookMainInfoDto;
 import org.example.nerdysoft.model.entity.Book;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface BookMapper {
-    BookMapper INSTANCE = Mappers.getMapper(BookMapper.class);
+    BookDetailedDto toDto(Book book);
 
-    BookDto toDto(Book book);
-
-    Book toEntity(BookDto bookDto);
+    Book toEntity(BookDetailedDto bookDetailedDto);
 }
+

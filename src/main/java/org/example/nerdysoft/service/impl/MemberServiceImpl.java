@@ -4,8 +4,11 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.example.nerdysoft.model.dto.MemberDto;
+import org.example.nerdysoft.constant.MessageConstants;
+import org.example.nerdysoft.model.dto.MemberDetailedDto;
 import org.example.nerdysoft.model.entity.Member;
+import org.example.nerdysoft.model.exception.MemberHasBorrowedBooksException;
+import org.example.nerdysoft.model.exception.MemberNotFoundException;
 import org.example.nerdysoft.output.persistent.MemberRepository;
 import org.example.nerdysoft.service.MemberService;
 import org.example.nerdysoft.service.mapper.MemberMapper;
@@ -24,22 +27,27 @@ public class MemberServiceImpl implements MemberService {
     private final MemberMapper memberMapper;
 
     @Override
-    public List<MemberDto> getAllMembers() {
-        log.info("Fetching all members");
-        return memberRepository.findAll().stream().map(memberMapper::toDto).collect(Collectors.toList());
+    public List<MemberDetailedDto> getAllMembers() {
+        log.info("Fetching all members with borrowed books");
+        List<Member> members = memberRepository.findAllWithBorrowedBooks();
+        return members.stream()
+                .map(memberMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public MemberDto getMemberById(Long id) {
+    public MemberDetailedDto getMemberById(Long id) {
         log.info("Fetching member with id: {}", id);
-        return memberRepository.findById(id).map(memberMapper::toDto).orElse(null);
+        return memberRepository.findByIdWithBorrowedBooks(id)
+                .map(memberMapper::toDto)
+                .orElseThrow(() -> new MemberNotFoundException(MessageConstants.MEMBER_NOT_FOUND_MESSAGE + id));
     }
 
     @Override
     @Transactional
-    public MemberDto saveMember(MemberDto memberDto) {
-        log.info("Saving member: {}", memberDto);
-        Member member = memberMapper.toEntity(memberDto);
+    public MemberDetailedDto saveMember(MemberDetailedDto memberDetailedDto) {
+        log.info("Saving member: {}", memberDetailedDto);
+        Member member = memberMapper.toEntity(memberDetailedDto);
         member.setMembershipDate(LocalDate.now());
         return memberMapper.toDto(memberRepository.save(member));
     }
@@ -48,11 +56,12 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public void deleteMember(Long id) {
         log.info("Deleting member with id: {}", id);
-        Member member = memberRepository.findById(id).orElseThrow(() ->
-                new IllegalArgumentException("Member not found"));
+        Member member = memberRepository.findById(id)
+                .orElseThrow(() -> new MemberNotFoundException(MessageConstants.MEMBER_NOT_FOUND_MESSAGE + id));
         if (!member.getBorrowedBooks().isEmpty()) {
-            throw new IllegalStateException("Member has borrowed books and cannot be deleted");
+            throw new MemberHasBorrowedBooksException(MessageConstants.MEMBER_HAS_BORROWED_BOOKS_MESSAGE);
         }
         memberRepository.deleteById(id);
+        log.debug("Member with id {} has been deleted.", id);
     }
 }
