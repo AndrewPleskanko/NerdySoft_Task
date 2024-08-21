@@ -1,9 +1,7 @@
 package org.example.nerdysoft.model.dto;
 
 import java.util.List;
-import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -19,7 +17,7 @@ public class BookDetailedDto {
     private Long id;
 
     @NotBlank(message = "Title is required")
-    @Pattern(regexp = "^[A-Z][a-zA-Z\\s]{2,}$", message =
+    @Pattern(regexp = "^[A-Z][a-zA-Z]{2,}$", message =
             "Title should start with a capital letter and have at least 3 characters")
     private String title;
 

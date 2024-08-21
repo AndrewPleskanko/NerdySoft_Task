@@ -50,7 +50,8 @@ public class MemberController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MemberDetailedDto> updateMember(@PathVariable Long id, @Valid @RequestBody MemberDetailedDto memberDetails) {
+    public ResponseEntity<MemberDetailedDto> updateMember(@PathVariable Long id,
+                                                          @Valid @RequestBody MemberDetailedDto memberDetails) {
         log.info("PUT /api/members/{} - Updating member: {}", id, memberDetails);
         MemberDetailedDto member = memberService.getMemberById(id);
         if (member == null) {

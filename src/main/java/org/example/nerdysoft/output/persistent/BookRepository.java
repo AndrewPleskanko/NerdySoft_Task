@@ -1,7 +1,6 @@
 package org.example.nerdysoft.output.persistent;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -21,7 +20,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     Set<String> findDistinctBorrowedBookNames();
 
     @Query("SELECT b.title, COUNT(b) FROM Book b JOIN b.borrowers GROUP BY b.title")
-    Map<String, Long> findDistinctBorrowedBookNamesWithAmount();
+    List<Object[]> findDistinctBorrowedBookNamesWithAmountRaw();
 
     @Query("SELECT b FROM Book b LEFT JOIN FETCH b.borrowers")
     List<Book> findAllWithBorrowers();

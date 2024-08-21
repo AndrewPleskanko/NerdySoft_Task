@@ -1,14 +1,11 @@
 package org.example.nerdysoft.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Set;
 
 @Data
 @AllArgsConstructor

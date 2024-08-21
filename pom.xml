@@ -131,13 +131,12 @@
                 <version>0.8.11</version>
                 <configuration>
                     <excludes>
-                        <exclude>com/example/java-backend/entity/**</exclude>
-                        <exclude>com/example/java-backend/dto/**</exclude>
-                        <exclude>com/example/java-backend/exceptions/**</exclude>
-                        <exclude>com/example/java-backend/handler/**</exclude>
-                        <exclude>com/example/java-backend/mapper/**</exclude>
-                        <exclude>com/example/java-backend/security/**</exclude>
-                        <exclude>com/example/java-backend/Block2Application.class</exclude>
+                        <exclude>org/example/nerdysoft/model/**</exclude>
+                        <exclude>org/example/nerdysoft/service/mapper/**</exclude>
+                        <exclude>org/example/nerdysoft/output/exception/**</exclude>
+                        <exclude>org/example/nerdysoft/constant/**</exclude>
+                        <exclude>org/example/nerdysoft/config/**</exclude>
+                        <exclude>org/example/nerdysoft/NerdysoftApplication.class</exclude>
                         <includeNoLocationClasses>true</includeNoLocationClasses>
                     </excludes>
                     <rules>
@@ -147,7 +146,7 @@
                                 <limit>
                                     <counter>LINE</counter>
                                     <value>COVEREDRATIO</value>
-                                    <minimum>0.00</minimum>
+                                    <minimum>0.50</minimum>
                                 </limit>
                             </limits>
                         </rule>

@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.example.nerdysoft.model.dto.BookDetailedDto;
+import org.example.nerdysoft.model.dto.BookMainInfoDto;
 import org.example.nerdysoft.model.dto.BorrowRequestDto;
 import org.example.nerdysoft.service.BookService;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
@@ -49,7 +49,8 @@ public class BookController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BookDetailedDto> updateBook(@PathVariable Long id, @Valid @RequestBody BookDetailedDto bookDetails) {
+    public ResponseEntity<BookDetailedDto> updateBook(@PathVariable Long id,
+                                                      @Valid @RequestBody BookDetailedDto bookDetails) {
         log.info("Updating book with id: {}", id);
         return ResponseEntity.ok(bookService.updateBook(id, bookDetails));
     }
@@ -63,23 +64,21 @@ public class BookController {
 
     @PostMapping("/borrow")
     public ResponseEntity<Void> borrowBook(@RequestBody BorrowRequestDto borrowRequest) {
-        Long memberId = borrowRequest.getMemberId();
-        Long bookId = borrowRequest.getBookId();
-        log.info("Member with id: {} borrowing book with id: {}", memberId, bookId);
-        bookService.borrowBook(memberId, bookId);
+        log.info("Processing borrow request: {}", borrowRequest);
+        bookService.borrowBook(borrowRequest);
         return ResponseEntity.ok().build();
     }
 
 
     @PostMapping("/return")
-    public ResponseEntity<Void> returnBook(@RequestParam Long memberId, @RequestParam Long bookId) {
-        log.info("Member with id: {} returning book with id: {}", memberId, bookId);
-        bookService.returnBook(memberId, bookId);
+    public ResponseEntity<Void> returnBook(@RequestBody BorrowRequestDto borrowRequest) {
+        log.info("Processing return request: {}", borrowRequest);
+        bookService.returnBook(borrowRequest);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/borrowed/{memberName}")
-    public ResponseEntity<Set<BookDetailedDto>> getBooksBorrowedByMember(@PathVariable String memberName) {
+    public ResponseEntity<Set<BookMainInfoDto>> getBooksBorrowedByMember(@PathVariable String memberName) {
         log.info("Fetching books borrowed by member: {}", memberName);
         return ResponseEntity.ok(bookService.getBooksBorrowedByMember(memberName));
     }
@@ -90,7 +89,7 @@ public class BookController {
         return ResponseEntity.ok(bookService.getDistinctBorrowedBookNames());
     }
 
-    @GetMapping("/borrowed/distinct/amount")
+    @GetMapping("/borrowed/distinct/amounts")
     public ResponseEntity<Map<String, Long>> getDistinctBorrowedBookNamesWithAmount() {
         log.info("Fetching distinct borrowed book names with amount");
         return ResponseEntity.ok(bookService.getDistinctBorrowedBookNamesWithAmount());

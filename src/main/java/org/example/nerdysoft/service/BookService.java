@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.example.nerdysoft.model.dto.BookDetailedDto;
+import org.example.nerdysoft.model.dto.BookMainInfoDto;
+import org.example.nerdysoft.model.dto.BorrowRequestDto;
 
 public interface BookService {
     List<BookDetailedDto> getAllBooks();
@@ -17,11 +19,11 @@ public interface BookService {
 
     void deleteBook(Long id);
 
-    void borrowBook(Long memberId, Long bookId);
+    void borrowBook(BorrowRequestDto borrowRequest);
 
-    void returnBook(Long memberId, Long bookId);
+    void returnBook(BorrowRequestDto borrowRequest);
 
-    Set<BookDetailedDto> getBooksBorrowedByMember(String memberName);
+    Set<BookMainInfoDto> getBooksBorrowedByMember(String memberName);
 
     Set<String> getDistinctBorrowedBookNames();
 
