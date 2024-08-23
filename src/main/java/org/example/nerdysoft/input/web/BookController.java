@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/books")
+@RequestMapping("/api/books/v1")
 @RequiredArgsConstructor
 public class BookController {
 

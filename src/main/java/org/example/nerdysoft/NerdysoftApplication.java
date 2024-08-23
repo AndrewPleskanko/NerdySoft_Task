@@ -9,5 +9,5 @@ public class NerdysoftApplication {
     public static void main(String[] args) {
         SpringApplication.run(NerdysoftApplication.class, args);
     }
-
 }
+

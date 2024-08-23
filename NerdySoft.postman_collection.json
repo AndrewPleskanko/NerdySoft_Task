@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "4d174a3b-60cd-4bed-a3e4-d52b093bc098",
+		"_postman_id": "7a703fbe-831b-4f7d-bcb5-d5acd81a78ae",
 		"name": "NerdySoft",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "28949652"
@@ -12,7 +12,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/books",
+					"raw": "http://localhost:8080/api/books/v1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -20,7 +20,8 @@
 					"port": "8080",
 					"path": [
 						"api",
-						"books"
+						"books",
+						"v1"
 					]
 				}
 			},
@@ -32,7 +33,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/members",
+					"raw": "http://localhost:8080/api/members/v1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -40,7 +41,8 @@
 					"port": "8080",
 					"path": [
 						"api",
-						"members"
+						"members",
+						"v1"
 					]
 				}
 			},
@@ -52,7 +54,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/books/1",
+					"raw": "http://localhost:8080/api/books/v1/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -61,6 +63,7 @@
 					"path": [
 						"api",
 						"books",
+						"v1",
 						"1"
 					]
 				}
@@ -73,7 +76,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/members/1",
+					"raw": "http://localhost:8080/api/members/v1/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -82,6 +85,7 @@
 					"path": [
 						"api",
 						"members",
+						"v1",
 						"1"
 					]
 				}
@@ -103,7 +107,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/books",
+					"raw": "http://localhost:8080/api/books/v1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -111,7 +115,8 @@
 					"port": "8080",
 					"path": [
 						"api",
-						"books"
+						"books",
+						"v1"
 					]
 				}
 			},
@@ -132,7 +137,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/members",
+					"raw": "http://localhost:8080/api/members/v1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -140,7 +145,8 @@
 					"port": "8080",
 					"path": [
 						"api",
-						"members"
+						"members",
+						"v1"
 					]
 				}
 			},
@@ -161,7 +167,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/books/3",
+					"raw": "http://localhost:8080/api/books/v1/3",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -170,6 +176,7 @@
 					"path": [
 						"api",
 						"books",
+						"v1",
 						"3"
 					]
 				}
@@ -191,7 +198,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/members/3",
+					"raw": "http://localhost:8080/api/members/v1/3",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -200,6 +207,7 @@
 					"path": [
 						"api",
 						"members",
+						"v1",
 						"3"
 					]
 				}
@@ -212,7 +220,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/books/3",
+					"raw": "http://localhost:8080/api/books/v1/3",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -221,6 +229,7 @@
 					"path": [
 						"api",
 						"books",
+						"v1",
 						"3"
 					]
 				}
@@ -233,7 +242,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/members/2",
+					"raw": "http://localhost:8080/api/members/v1/3",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -242,7 +251,8 @@
 					"path": [
 						"api",
 						"members",
-						"2"
+						"v1",
+						"3"
 					]
 				}
 			},
@@ -255,7 +265,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{ \r\n    \"memberId\": 3,\r\n    \"bookId\": 3\r\n}",
+					"raw": "{ \r\n    \"memberId\": 2,\r\n    \"bookId\": 2\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -263,7 +273,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/books/borrow",
+					"raw": "http://localhost:8080/api/books/v1/borrow",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -272,6 +282,7 @@
 					"path": [
 						"api",
 						"books",
+						"v1",
 						"borrow"
 					]
 				}
@@ -285,7 +296,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{ \r\n    \"memberId\": 3,\r\n    \"bookId\": 3\r\n}",
+					"raw": "{ \r\n    \"memberId\": 2,\r\n    \"bookId\": 2\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -293,7 +304,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/books/return",
+					"raw": "http://localhost:8080/api/books/v1/return",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -302,6 +313,7 @@
 					"path": [
 						"api",
 						"books",
+						"v1",
 						"return"
 					]
 				}
@@ -314,7 +326,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/books/borrowed/John Doe",
+					"raw": "http://localhost:8080/api/books/v1/borrowed/John Doe",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -323,6 +335,7 @@
 					"path": [
 						"api",
 						"books",
+						"v1",
 						"borrowed",
 						"John Doe"
 					]
@@ -336,7 +349,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/books/borrowed/distinct",
+					"raw": "http://localhost:8080/api/books/v1/borrowed/distinct",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -345,6 +358,7 @@
 					"path": [
 						"api",
 						"books",
+						"v1",
 						"borrowed",
 						"distinct"
 					]
@@ -358,7 +372,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/books/borrowed/distinct/amounts",
+					"raw": "http://localhost:8080/api/books/v1/borrowed/distinct/amounts",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -367,6 +381,7 @@
 					"path": [
 						"api",
 						"books",
+						"v1",
 						"borrowed",
 						"distinct",
 						"amounts"

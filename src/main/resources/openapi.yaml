@@ -1,13 +1,15 @@
-openapi: 3.0.1
+openapi: 3.0.0
 info:
-  title: Library Management System API
-  description: API documentation for the Library Management System
+  title: Library API
   version: 1.0.0
+  description: API for managing books and members in a library system
 paths:
-  /api/books:
+  /api/books/v1:
     get:
-      summary: View a list of available books
-      description: Fetches all books available in the library
+      summary: Fetch all books
+      operationId: getAllBooks
+      tags:
+        - Books
       responses:
         '200':
           description: A list of books
@@ -16,27 +18,31 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Book'
+                  $ref: '#/components/schemas/BookDetailedDto'
     post:
-      summary: Add a new book
-      description: Creates a new book entry in the library
+      summary: Create a new book
+      operationId: createBook
+      tags:
+        - Books
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Book'
+              $ref: '#/components/schemas/BookDetailedDto'
       responses:
         '200':
           description: The created book
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Book'
-  /api/books/{id}:
+                $ref: '#/components/schemas/BookDetailedDto'
+  /api/books/v1/{id}:
     get:
-      summary: Get a book by Id
-      description: Fetches a book by its ID
+      summary: Fetch a book by ID
+      operationId: getBookById
+      tags:
+        - Books
       parameters:
         - name: id
           in: path
@@ -45,16 +51,16 @@ paths:
             type: integer
       responses:
         '200':
-          description: The requested book
+          description: The book details
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Book'
-        '404':
-          description: Book not found
+                $ref: '#/components/schemas/BookDetailedDto'
     put:
-      summary: Update an existing book
-      description: Updates the details of an existing book
+      summary: Update a book by ID
+      operationId: updateBook
+      tags:
+        - Books
       parameters:
         - name: id
           in: path
@@ -66,19 +72,19 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Book'
+              $ref: '#/components/schemas/BookDetailedDto'
       responses:
         '200':
           description: The updated book
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Book'
-        '404':
-          description: Book not found
+                $ref: '#/components/schemas/BookDetailedDto'
     delete:
-      summary: Delete a book
-      description: Deletes a book from the library
+      summary: Delete a book by ID
+      operationId: deleteBook
+      tags:
+        - Books
       parameters:
         - name: id
           in: path
@@ -87,19 +93,234 @@ paths:
             type: integer
       responses:
         '204':
-          description: Book deleted
-        '404':
-          description: Book not found
+          description: No content
+  /api/books/v1/borrow:
+    post:
+      summary: Borrow a book
+      operationId: borrowBook
+      tags:
+        - Books
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BorrowRequestDto'
+      responses:
+        '200':
+          description: Book borrowed successfully
+  /api/books/v1/return:
+    post:
+      summary: Return a borrowed book
+      operationId: returnBook
+      tags:
+        - Books
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BorrowRequestDto'
+      responses:
+        '200':
+          description: Book returned successfully
+  /api/books/v1/borrowed/{memberName}:
+    get:
+      summary: Fetch books borrowed by a member
+      operationId: getBooksBorrowedByMember
+      tags:
+        - Books
+      parameters:
+        - name: memberName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of borrowed books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BookMainInfoDto'
+  /api/books/v1/borrowed/distinct:
+    get:
+      summary: Fetch distinct borrowed book names
+      operationId: getDistinctBorrowedBookNames
+      tags:
+        - Books
+      responses:
+        '200':
+          description: A set of distinct borrowed book names
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /api/books/v1/borrowed/distinct/amounts:
+    get:
+      summary: Fetch distinct borrowed book names with amounts
+      operationId: getDistinctBorrowedBookNamesWithAmount
+      tags:
+        - Books
+      responses:
+        '200':
+          description: A map of book names to their borrowed amounts
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: integer
+  /api/members/v1:
+    get:
+      summary: Fetch all members
+      operationId: getAllMembers
+      tags:
+        - Members
+      responses:
+        '200':
+          description: A list of members
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MemberDetailedDto'
+    post:
+      summary: Create a new member
+      operationId: createMember
+      tags:
+        - Members
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MemberDetailedDto'
+      responses:
+        '200':
+          description: The created member
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemberDetailedDto'
+  /api/members/v1/{id}:
+    get:
+      summary: Fetch a member by ID
+      operationId: getMemberById
+      tags:
+        - Members
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: The member details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemberDetailedDto'
+    put:
+      summary: Update a member by ID
+      operationId: updateMember
+      tags:
+        - Members
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MemberDetailedDto'
+      responses:
+        '200':
+          description: The updated member
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemberDetailedDto'
+    delete:
+      summary: Delete a member by ID
+      operationId: deleteMember
+      tags:
+        - Members
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: No content
 components:
   schemas:
-    Book:
+    BookDetailedDto:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        author:
+          type: string
+        amount:
+          type: integer
+        borrowers:
+          type: array
+          items:
+            $ref: '#/components/schemas/MemberMainInfoDto'
+    BookMainInfoDto:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        author:
+          type: string
+        amount:
+          type: integer
+    BorrowRequestDto:
+      type: object
+      properties:
+        memberId:
+          type: integer
+        bookId:
+          type: integer
+    MemberDetailedDto:
       type: object
       properties:
         id:
           type: integer
         name:
           type: string
-        author:
+        membershipDate:
           type: string
-        amount:
+          format: date
+        borrowedBooks:
+          type: array
+          items:
+            $ref: '#/components/schemas/BookMainInfoDto'
+    MemberMainInfoDto:
+      type: object
+      properties:
+        id:
           type: integer
+        name:
+          type: string
+        membershipDate:
+          type: string
+          format: date
